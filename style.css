@@ -1,0 +1,13 @@
+body {
+    background-color: rgb(150, 150, 150);
+}
+
+#data {
+    width: 100px;
+    
+    position: absolute;
+    top: 0.5em;
+    left: 1010px;
+    
+    background-color: yellowgreen;
+}
