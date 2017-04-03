@@ -44,26 +44,44 @@ function draw() {
 
         ai();
 
-        collide(p, b);
-        collide(p2, b);
+        collide();
 
         p.show();
         p2.show();
         b.show();
-
-        document.getElementById("player1").innerHTML = "Player 1: " + points1;
-        document.getElementById("player2").innerHTML = "Player 2: " + points2;
     }, 1000 / fps);
 }
 
 function update() {
-    document.addEventListener('keydown', function (event) {
-        if (event.keyCode === 38) {
-            p.y -= p.speed;
-        } else if (event.keyCode === 40) {
-            p.y += p.speed;
-        }
-    });
+    b.x += b.speed.x;
+    b.y += b.speed.y;
+
+    if (points1 >= 100 || points2 >= 100) {
+        document.getElementById("data").style.width = 120 + "px";
+    } else if (points1 >= 1000 || points2 >= 1000) {
+        document.getElementById("data").style.width = 130 + "px";
+    }
+    if (points1 >= 10000) {
+        alert("You win!");
+        location.reload();
+    } else if (points2 >= 10000) {
+        alert("You lose.");
+        location.reload();
+    }
+        document.getElementById("player1").innerHTML = "Player 1: " + points1;
+        document.getElementById("player2").innerHTML = "Player 2: " + points2;
+}
+
+function ai() {
+    p2.y = b.y;
+}
+
+function collide() {
+    if (p.x + p.width >= b.x && p.x <= b.x && p.y + p.height >= b.y && p.y <= b.y) {
+        b.speed.x -= b.speed.x * 2;
+    } else if (p2.x + p2.width >= b.x && p2.x <= b.x && p2.y + p2.height >= b.y && p2.y <= b.y) {
+        b.speed.x -= b.speed.x * 2;
+    }
 
     if (b.y <= 0 || b.y + b.height >= canvas.height) {
         b.speed.y -= b.speed.y * 2;
@@ -77,19 +95,6 @@ function update() {
         b.y = cHeight / 2 - bSize / 2;
     }
 
-    b.x += b.speed.x;
-    b.y += b.speed.y;
-}
-
-function ai() {
-    p2.y = b.y;
-}
-
-function collide(a, b) {
-    //b is the object moving relative to a
-    if (a.x + a.width >= b.x && a.x <= b.x && a.y + a.height >= b.y && a.y <= b.y) {
-        b.speed.x -= b.speed.x * 2;
-    }
     if (p.y <= 0)
         p.y = 0;
     if (p.y + p.height >= canvas.height)
