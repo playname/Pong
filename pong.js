@@ -123,7 +123,6 @@ function paddle(x, y, width, height, color) {
     this.width = width;
     this.height = height;
     this.color = color;
-    this.speed = pSpeed;
 
     this.show = function () {
         context.fillStyle = this.color;
